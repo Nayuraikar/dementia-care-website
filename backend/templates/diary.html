@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGIMEMORIES</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+</head>
+<body >
+    <header>
+        <h1>DIGIMEMORIES</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/location">Location Tracking</a>
+            <a href="/diary">Diary</a>
+            <a href="/photo_album">Photo Album</a>
+            <a href="/reminders">Reminders</a>
+            <a href="/game1">color word game</a>
+            <a href="/drag_and_drop"> Drag and Drop Game</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Write a New Entry</h2>
+        <p>We'd love to hear your thoughts. Write a new entry below:</p>
+        <form action="/diary" method="post">
+            <textarea name="diary_entry" placeholder="Write your diary entry here..." required rows="10" cols="50"></textarea>
+            <button type="submit">Save Entry</button>
+        </form>
+
+        <h3>Your Diary Entries</h3>
+        <ul>
+            {% for entry in entries %}
+                <li>{{ entry }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>

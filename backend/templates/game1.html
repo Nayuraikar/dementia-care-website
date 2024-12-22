@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color-Word Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1A1A1D; /* Updated background color */
+            font-family: Arial, sans-serif; /* Clean font */
+        }
+
+        .game1-main-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            margin: auto; /* Center the container itself */
+        }
+
+        .game1-box {
+            margin-bottom: 30px;
+            display: flex; /* Use flexbox for centering */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items horizontally */
+        }
+
+        .game1-word {
+            font-size: 3rem;
+            margin: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .game1-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 20px; /* Space between buttons */
+            justify-items: center; /* Center items in grid cells */
+            width: 100%; /* Full width for the grid */
+        }
+
+        .option {
+            padding: 15px; /* Padding for buttons */
+            border: none;
+            border-radius: 12px; /* Rounded corners */
+            cursor: pointer;
+            font-size: 1.4rem; /* Font size */
+            transition: background-color 0.3s, transform 0.2s;
+            color: #fff;
+            background-color: #563063; /* Updated button color */
+            width: 100%; /* Set a consistent width for buttons */
+            text-align: center; /* Center text */
+        }
+
+        .option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0.9; /* Slightly dim on hover */
+        }
+
+        .game1-info-box {
+            margin-top: 20px;
+        }
+
+        .game1-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .game1-feedback {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            transition: color 0.3s;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+            justify-content: center; /* Center modal vertically */
+            align-items: center; /* Center modal horizontally */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto; /* Center the modal content */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 10px; /* Rounded corners */
+            text-align: left;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); /* Added shadow */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .help-button {
+            margin-top: 20px; /* Space above the Help button */
+            padding: 10px 20px; /* Padding for button */
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background-color: #563063;
+            color: white;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+        }
+
+        .help-button:hover {
+            background-color: #7a4b7b; /* Slightly lighter color on hover */
+        }
+    </style>
+</head>
+
+<body class="game1-body">
+    <header class="game1-header">
+        <h1 class="game1-title">DIGIMEMORIES</h1>
+        <nav class="game1-nav">
+            <a href="/">Home</a>
+            <a href="/location">Location Tracking</a>
+            <a href="/diary">Diary</a>
+            <a href="/photo_album">Photo Album</a>
+            <a href="/reminders">Reminders</a>
+            <a href="/game1">Color Word Game</a>
+            <a href="/drag_and_drop"> Drag and Drop Game</a>
+        </nav>
+    </header>
+
+    <div class="game1-main-container">
+        <div class="game1-box">
+            <div id="word" class="game1-word">Loading...</div>
+            <div id="options" class="game1-options"></div>
+        </div>
+
+        <div class="game1-info-box">
+            <div id="score" class="game1-score">Score: 0</div>
+            <div id="feedback" class="game1-feedback"></div>
+        </div>
+
+        <button class="help-button" id="helpBtn">Help</button> <!-- Help button -->
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Game Description</h2>
+            <p>
+                In this Color-Word Game, your objective is to identify the color of the text rather than the word itself. 
+                For example, if the word "Red" is displayed in blue color, you should select "Blue" as your answer. 
+                The game tests your attention and quick thinking. Good luck!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const colors = ['Red', 'Green', 'Blue', 'Yellow', 'Purple', 'Orange'];
+        const backgroundColors = [
+            '#1A1A1D', '#FFF6E3', '#CDC1FF', '#BFECFF', '#C0DBEA', '#BA90C6', '#E8A0BF', '#FDF4F5'
+        ];
+        let score = 0;
+        let currentWord = '';
+        let currentColor = '';
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function generateQuestion() {
+            currentWord = colors[getRandomInt(colors.length)];
+            currentColor = colors[getRandomInt(colors.length)];
+
+            while (currentWord === currentColor) {
+                currentColor = colors[getRandomInt(colors.length)];
+            }
+
+            const randomIndex = getRandomInt(backgroundColors.length); // Ensure a valid index
+            document.body.style.backgroundColor = backgroundColors[randomIndex]; // Apply background color
+            console.log('Chosen Background Color:', backgroundColors[randomIndex]); // Debug log
+
+            document.getElementById('word').textContent = currentWord;
+            document.getElementById('word').style.color = currentColor;
+            generateOptions();
+        }
+
+        function generateOptions() {
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+
+            colors.forEach(color => {
+                const button = document.createElement('button');
+                button.textContent = color;
+                button.className = 'option';
+                button.style.backgroundColor = '#563063'; // Set the button color to #563063
+                button.onmouseover = function() {
+                    this.style.backgroundColor = shadeColor('#563063', -20); // Darker shade on hover
+                };
+                button.onmouseout = function() {
+                    this.style.backgroundColor = '#563063'; // Reset to original color
+                };
+                button.onclick = () => checkAnswer(color);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function shadeColor(color, percent) {
+            const num = parseInt(color.slice(1), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return `#${(0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 + (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 + (B < 255 ? (B < 1 ? 0 : B) : 255)).toString(16).slice(1)}`;
+        }
+
+        function checkAnswer(selectedColor) {
+            const feedback = document.getElementById('feedback');
+            if (selectedColor.toLowerCase() === currentColor.toLowerCase()) {
+                score++;
+                feedback.textContent = 'Correct!';
+                feedback.style.color = 'green';
+            } else {
+                feedback.textContent = `Wrong! The correct answer was ${currentColor}`;
+                feedback.style.color = 'red';
+            }
+            document.getElementById('score').textContent = `Score: ${score}`;
+            generateQuestion();
+        }
+
+        // Modal functionality
+        const modal = document.getElementById("myModal");
+        const helpBtn = document.getElementById("helpBtn");
+        const closeBtn = document.getElementsByClassName("close")[0];
+
+        helpBtn.onclick = function() {
+            modal.style.display = "flex"; // Show the modal as a flexbox for centering
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none"; // Close the modal
+        }
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none"; // Close the modal if clicked outside
+            }
+        }
+
+        generateQuestion();
+    </script>
+</body>
+
+</html>

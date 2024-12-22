@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Dementia Care Website - Reminders</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+   <style>
+       body {
+           background-color: #1A1A1D; /* Light background color */
+           font-family: Arial, sans-serif; /* Clean font */
+           padding: 20px; /* Padding for body */
+       }
+
+
+       header {
+           background-color: #704264;
+           color: white;
+           padding: 30px;
+           text-align: center;
+           border-radius: 15px;
+           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+           margin-bottom: 30px;
+       }
+
+
+       header h1 {
+           font-size: 55px;
+           letter-spacing: 2px;
+       }
+
+
+       header nav a {
+           color: white;
+           margin: 0 20px;
+           font-size: 18px;
+           text-decoration: none;
+           text-transform: uppercase;
+           font-weight: 600;
+           transition: color 0.3s ease;
+       }
+
+
+       header nav a:hover {
+           color: #A64D79;
+           transform: scale(1.05);
+       }
+
+
+       .container {
+           max-width: 800px;
+           margin: 20px auto;
+           padding: 20px;
+           background: #fff;
+           border-radius: 10px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+       }
+
+
+       h2, h3 {
+           color: #7042643;
+           margin-bottom: 15px;
+       }
+
+
+       form {
+           margin-bottom: 20px;
+       }
+
+
+       input[type="text"],
+       input[type="number"],
+       select {
+           width: calc(100% - 22px);
+           padding: 10px;
+           margin-bottom: 15px; /* Increased margin for better spacing */
+           border: 1px solid #ccc;
+           border-radius: 5px;
+       }
+
+
+       button {
+           background: #704264;
+           color: #fff;
+           border: none;
+           padding: 10px 15px;
+           cursor: pointer;
+           border-radius: 5px;
+           transition: background 0.3s ease;
+           margin-top: 10px; /* Added margin for button spacing */
+       }
+
+
+       button:hover {
+           background: #704264;
+       }
+
+
+       .delete-button {
+           background-color: transparent; /* Transparent background */
+           border: none; /* No border */
+           cursor: pointer; /* Pointer cursor */
+           padding: 2px; /* Padding for the button */
+           margin-left: 5px; /* Margin for spacing */
+       }
+
+
+       .delete-button img {
+           width: 20px; /* Smaller icon size */
+           height: 20px; /* Smaller icon size */
+       }
+
+
+       ul {
+           list-style: none;
+           padding: 0;
+       }
+
+
+       li {
+           padding: 10px;
+           margin-bottom: 5px;
+           border-radius: 5px;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+       }
+
+
+       .status-done {
+           background-color: #90EE90;
+       }
+
+
+       .status-updating {
+           background-color: #FFD700;
+       }
+
+
+       .hidden {
+           display: none;
+       }
+
+
+       /* Style for the reminder text */
+       strong {
+           font-weight: bold;
+           color: #333;
+       }
+
+
+       small {
+           color: #666;
+       }
+
+
+       em {
+           color: #999;
+       }
+      
+       .small-button {
+           font-size: 10px; /* Smaller font size */
+           padding: 10px 15px; /* Adjust padding for consistency */
+           border-radius: 3px; /* Slight rounding */
+           background: #704264; /* Match Add Reminder button */
+           color: #fff;
+           border: none; /* Remove default border */
+           cursor: pointer;
+       }
+
+
+       .small-button:hover {
+           background-color: #704264; /* Hover effect */
+       }
+       /* Enhanced layout for the Timer and Date-Time options */
+       #date-input, #timer-input {
+           padding: 15px;
+           margin-bottom: 20px;
+           background-color: #f9f9f9; /* Light background for better contrast */
+           border: 1px solid #ddd;
+           border-radius: 10px;
+           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+       }
+
+
+       #date-input label, #timer-input label {
+           font-weight: bold;
+           color: #704264;
+           margin-bottom: 5px;
+           display: block;
+       }
+
+
+       #date-input input, #timer-input input, #date-input select {
+           width: calc(100% - 22px);
+           padding: 10px;
+           margin-bottom: 15px;
+           border: 1px solid #ccc;
+           border-radius: 5px;
+       }
+
+
+       .hidden {
+           display: none; /* Ensure the hidden class works properly */
+       }
+
+
+       /* Responsive styling for better mobile support */
+       @media (max-width: 600px) {
+           #date-input, #timer-input {
+               padding: 10px;
+           }
+
+
+           input[type="number"], select {
+               width: 100%; /* Ensure input fields fit on smaller screens */
+           }
+       }
+
+
+
+
+   </style>
+</head>
+
+
+<body>
+   <header>
+       <h1>DIGIMEMORIES</h1>
+       <nav>
+           <a href="/">Home</a>
+           <a href="/location">Location Tracking</a>
+           <a href="/diary">Diary</a>
+           <a href="/photo_album">Photo Album</a>
+           <a href="/reminders">Reminders</a>
+           <a href="/game1">Color Word Game</a>
+           <a href="/drag_and_drop"> Drag and Drop Game</a>
+       </nav>
+   </header>
+
+
+   <div class="container">
+      
+       <form id="reminder-form">
+           <h2>Add a New Reminder</h2>
+           <input type="text" id="reminder-text" placeholder="Enter reminder text" required>
+      
+           <label for="reminder-option">Choose Reminder Type:</label>
+           <select id="reminder-option" required>
+               <option value="">Select an option</option>
+               <option value="date">Set Exact Date & Time</option>
+               <option value="timer">Set Timer</option>
+           </select>
+      
+           <div id="date-input" class="hidden">
+               <label for="reminder-time">Set Time (12-hour clock):</label>
+               <input type="number" id="reminder-hour" min="1" max="12" placeholder="Hour">
+               <input type="number" id="reminder-minute" min="0" max="59" placeholder="Minute">
+               <select id="reminder-period">
+                   <option value="AM">AM</option>
+                   <option value="PM">PM</option>
+               </select>
+               <label for="reminder-date">Set Date:</label>
+               <input type="date" id="reminder-date">
+           </div>
+      
+           <div id="timer-input" class="hidden">
+               <label for="reminder-timer">Set Timer (in minutes):</label>
+               <input type="number" id="reminder-timer" min="1" placeholder="Minutes">
+           </div>
+      
+           <button type="submit">Add Reminder</button>
+           <button class="small-button" onclick="notifyUser('Test Notification!')">Test</button>
+       </form>
+      
+
+
+      
+
+
+
+
+       <section>
+           <h3>Saved Reminders:</h3>
+           <ul id="reminder-list">
+               <!-- Dynamically generated reminders will appear here -->
+           </ul>
+       </section>
+   </div>
+
+
+   <script>
+       const reminderOption = document.getElementById('reminder-option');
+       const dateInput = document.getElementById('date-input');
+       const timerInput = document.getElementById('timer-input');
+  
+       reminderOption.addEventListener('change', () => {
+           if (reminderOption.value === 'date') {
+               dateInput.classList.remove('hidden');
+               timerInput.classList.add('hidden');
+           } else if (reminderOption.value === 'timer') {
+               timerInput.classList.remove('hidden');
+               dateInput.classList.add('hidden');
+           } else {
+               dateInput.classList.add('hidden');
+               timerInput.classList.add('hidden');
+           }
+       });
+  
+       document.getElementById('reminder-form').addEventListener('submit', function (e) {
+           e.preventDefault();
+  
+           const text = document.getElementById('reminder-text').value;
+           const option = reminderOption.value;
+           let time;
+  
+           if (option === 'date') {
+               const hour = parseInt(document.getElementById('reminder-hour').value);
+               const minute = parseInt(document.getElementById('reminder-minute').value);
+               const period = document.getElementById('reminder-period').value;
+               const date = document.getElementById('reminder-date').value;
+  
+               if (!hour || isNaN(hour) || !minute || isNaN(minute) || !date) {
+                   alert('Please fill in all date and time fields.');
+                   return;
+               }
+  
+               const adjustedHour = period === 'PM' && hour < 12 ? hour + 12 : period === 'AM' && hour === 12 ? 0 : hour;
+               time = new Date(`${date}T${adjustedHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:00`);
+  
+           } else if (option === 'timer') {
+               const timerMinutes = parseInt(document.getElementById('reminder-timer').value);
+  
+               if (!timerMinutes || isNaN(timerMinutes)) {
+                   alert('Please enter a valid timer duration.');
+                   return;
+               }
+  
+               time = new Date(Date.now() + timerMinutes * 60 * 1000); // Set the time for the timer
+           } else {
+               alert('Please select a reminder type.');
+               return;
+           }
+  
+           // Load existing reminders from local storage
+           const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+           reminders.push({ text, time: time.toISOString(), completed: false });
+           localStorage.setItem('reminders', JSON.stringify(reminders));
+  
+           document.getElementById('reminder-text').value = '';
+           reminderOption.value = '';
+           dateInput.classList.add('hidden');
+           timerInput.classList.add('hidden');
+  
+           loadReminders();
+           checkReminders(); // Check reminders immediately after adding
+       });
+  
+       function loadReminders() {
+           const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+           const reminderList = document.getElementById('reminder-list');
+           reminderList.innerHTML = '';
+  
+           reminders.sort((a, b) => new Date(a.time) - new Date(b.time));
+  
+           reminders.forEach(function (reminder, index) {
+               const li = document.createElement('li');
+               const reminderDate = new Date(reminder.time);
+               const currentTime = new Date();
+  
+               const status = reminder.completed ? 'Done' : (reminderDate > currentTime ? 'Updating' : 'Done');
+               const statusClass = reminder.completed ? 'status-done' : 'status-updating';
+  
+               li.className = statusClass;
+               li.innerHTML = `
+                   <strong>${reminder.text}</strong><br>
+                   <small>Set for: ${reminderDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</small><br>
+                   <em>Status: ${status}</em>
+                   <button class="delete-button" onclick="deleteReminder(${index})">
+                       <img src="https://img.icons8.com/ios-filled/50/ffffff/trash.png" alt="Delete">
+                   </button>
+               `;
+               reminderList.appendChild(li);
+           });
+       }
+  
+       function deleteReminder(index) {
+           const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+           reminders.splice(index, 1);
+           localStorage.setItem('reminders', JSON.stringify(reminders));
+           loadReminders();
+       }
+  
+       function checkReminders() {
+           const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+           const currentTime = new Date();
+
+
+           reminders.forEach((reminder, index) => {
+               const reminderDate = new Date(reminder.time);
+               if (!reminder.completed && reminderDate <= currentTime) {
+                   console.log(`Reminder triggered: ${reminder.text}`);
+                   notifyUser(reminder.text); // This should trigger the notification
+                   reminder.completed = true; // Mark as completed
+                   localStorage.setItem('reminders', JSON.stringify(reminders)); // Save updated status
+               }
+           });
+           loadReminders(); // Refresh the reminder list
+       }
+
+
+  
+       function notifyUser(reminderText) {
+           if (Notification.permission === "granted") {
+               new Notification("Reminder Alert", {
+                   body: reminderText
+               });
+           } else if (Notification.permission !== "denied") {
+               Notification.requestPermission().then(permission => {
+                   if (permission === "granted") {
+                       new Notification("Reminder Alert", {
+                           body: reminderText
+                       });
+                   }
+               });
+           }
+       }
+  
+       // Request notification permission on page load
+       window.onload = function () {
+           if (Notification.permission === "default") {
+               Notification.requestPermission().then(permission => {
+                   if (permission === "granted") {
+                       console.log("Notification permission granted.");
+                   } else {
+                       console.log("Notification permission denied.");
+                   }
+               });
+           }
+       };
+  
+       loadReminders();
+       setInterval(checkReminders, 10000); // Check every 10 seconds
+   </script>
+  
+</body>
+
+
+</html>

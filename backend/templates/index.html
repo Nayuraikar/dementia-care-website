@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Dementia Care Website</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+   <style>
+       /* General Styles */
+       body {
+           font-family: 'Lexend', 'Arial', sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f4f4f4;
+           color: #333;
+       }
+
+
+       header {
+           background: linear-gradient(to right, #704264, #563063);
+           color: white;
+           padding: 20px;
+           text-align: center;
+           position: sticky;
+           top: 0;
+           z-index: 1000;
+       }
+
+
+       header h1 {
+           margin: 0;
+           font-size: 55px;
+           letter-spacing: 1px;
+       }
+
+
+       header nav {
+           margin-top: 40px;
+       }
+
+
+       header nav a {
+           color: white;
+           margin: 0 15px;
+           text-decoration: none;
+           font-weight: bold;
+           transition: color 0.3s;
+       }
+
+
+       header nav a:hover {
+           color: #ffba08;
+       }
+
+
+       /* Hero Section */
+       .hero {
+           background-image: url('path/to/your/image.jpg'); /* Add a suitable image URL */
+           background-size: cover;
+           background-position: center;
+           height: 300px;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           color: white;
+           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+           position: relative;
+       }
+
+
+       .hero::after {
+           content: "";
+           position: absolute;
+           top: 0;
+           left: 0;
+           right: 0;
+           bottom: 0;
+           background: rgba(0, 0, 0, 0.5); /* Overlay */
+       }
+
+
+       .hero h2 {
+           position: relative;
+           font-size: 2em;
+           z-index: 1;
+           text-align: center;
+       }
+
+
+       /* Main Section */
+       section {
+           padding: 20px;
+           text-align: center;
+       }
+
+
+       section h2 {
+           margin: 20px 0;
+           font-size: 1.8em;
+           color: #563063;
+       }
+
+
+       section p {
+           font-size: 1.2em;
+           line-height: 1.6;
+           margin-bottom: 30px;
+       }
+
+
+       /* Quote Section */
+       #quote-container {
+           background-color: #f0f0f0;
+           padding: 20px;
+           border-radius: 5px;
+           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+           margin: 20px auto;
+           max-width: 600px;
+       }
+
+
+       #quote-text {
+           font-size: 1.2em;
+           font-style: italic;
+           color: #555;
+       }
+
+
+       #quote-author {
+           text-align: right;
+           font-size: 1em;
+           font-weight: bold;
+       }
+   </style>
+</head>
+
+
+<body>
+   <header>
+       <h1>DIGIMEMORIES</h1>
+       <nav>
+           <a href="/">Home</a>
+           <a href="/location">Location Tracking</a>
+           <a href="/diary">Diary</a>
+           <a href="/photo_album">Photo Album</a>
+           <a href="/reminders">Reminders</a>
+           <a href="/game1">Color Word Game</a>
+           <a href="/drag_and_drop">Drag and Drop Game</a>
+       </nav>
+   </header>
+
+
+   <section>
+       <h2>Welcome to the Dementia Care Website</h2>
+       <p>
+           This platform is designed to help caregivers and dementia patients stay connected and engaged through a variety of resources and activities. Whether you're looking for tools to enhance daily routines, engage in meaningful activities, or simply find support, DIGIMEMORIES is here for you.
+       </p>
+       <p>
+           Explore our interactive games, share memories, and access helpful resources tailored to the needs of those living with dementia.
+       </p>
+
+
+       <!-- Quote Section -->
+       <div id="quote-container">
+           <h3>Inspirational Quote:</h3>
+           <blockquote id="quote-text"></blockquote>
+           <p id="quote-author"></p>
+       </div>
+   </section>
+
+
+   <script>
+       // List of inspirational quotes
+       const quotes = [
+           "The future belongs to those who believe in the beauty of their dreams. – Eleanor Roosevelt",
+           "Your time is limited, don't waste it living someone else's life. – Steve Jobs",
+           "Success is not final, failure is not fatal: It is the courage to continue that counts. – Winston Churchill",
+           "Happiness is not something ready made. It comes from your own actions. – Dalai Lama",
+           "You must be the change you wish to see in the world. – Mahatma Gandhi",
+           "When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place. – Bhagavad Gita",
+           "You have the right to work, but never to the fruit of work. – Bhagavad Gita",
+           "The soul is neither born, and nor does it die. – Bhagavad Gita",
+           "Set your heart upon your work, but never on its reward. – Bhagavad Gita"
+       ];
+
+
+       // Function to display a random quote
+       function displayRandomQuote() {
+           const randomIndex = Math.floor(Math.random() * quotes.length);
+           const quote = quotes[randomIndex];
+
+
+           // Set the quote text
+           document.getElementById("quote-text").textContent = quote;
+       }
+
+
+       // Call the function to display a quote when the page loads
+       document.addEventListener("DOMContentLoaded", displayRandomQuote);
+   </script>
+</body>
+
+
+</html>

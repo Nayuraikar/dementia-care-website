@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Album</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>DIGIMEMORIES</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/location">Location Tracking</a>
+            <a href="/diary">Diary</a>
+            <a href="/photo_album">Photo Album</a>
+            <a href="/reminders">Reminders</a>
+            <a href="/game1">color word game</a>
+            <a href="/drag_and_drop"> Drag and Drop Game</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Upload a Photo</h2>
+        <form action="/photo_album" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+
+        <h3>Your Photos</h3>
+        <div class="photo-gallery">
+            {% for photo in photos %}
+                <div class="photo">
+                    <img src="{{ url_for('static', filename='uploads/' + photo) }}" alt="Uploaded Photo">
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>

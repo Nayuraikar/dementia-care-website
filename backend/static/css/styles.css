@@ -1,0 +1,496 @@
+/* General styles */
+
+body {
+    font-family: 'Lexend','Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(to bottom, #1A1A1D, #333);
+    color: #333;
+    font-size: 18px;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(to right, #704264, #563063);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-size: 55px;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    font-family: 'Oswald', sans-serif;
+}
+
+header nav a {
+    color: white;
+    margin: 0 20px;
+    font-size: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: color 0.3s ease, transform 0.3s;
+}
+
+header nav a:hover {
+    color: #BB8493;
+    transform: scale(1.1);
+}
+
+/* Button Styles */
+button {
+    background: linear-gradient(to right, #704264, #BA90C6);
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    width: auto;
+    transition: background 0.3s ease, transform 0.3s;
+    margin-top: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: linear-gradient(to right, #563063, #BA90C6);
+    transform: translateY(-3px);
+}
+
+button:focus {
+    outline: 3px solid #563063;
+}
+
+/* Section Styles */
+section {
+    padding: 30px;
+    margin-top: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Card Styles */
+.card {
+    background-color: #f9f9f9;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to right, #704264, #563063);
+    color: white;
+    margin-top: 40px;
+    border-radius: 15px;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    header h1 {
+        font-size: 32px;
+    }
+
+    header nav a {
+        font-size: 16px;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 18px;
+    }
+}
+
+/* Diary styles */
+.diary {
+    background-color: #ffffff;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.diary h2 {
+    font-size: 36px;
+    text-align: center;
+    color: #704264;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+textarea {
+    width: 80%;
+    padding: 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+textarea:focus {
+    border-color: #704264;
+}
+
+/* Photo Album styles */
+.photo-album {
+    background-color: #ffffff;
+    padding: 30px;
+    margin-top: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.photo-album h2 {
+    font-size: 40px;
+    text-align: center;
+    color: #704264;
+    margin-bottom: 35px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.photo {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 300px;
+}
+
+.photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.05);
+}
+
+.photo img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-bottom: 5px solid #704264;
+    transition: transform 0.3s ease;
+}
+
+ /* Reminders Page Styles */
+ .reminders {
+    background-color: #ffffff;
+    padding: 40px;
+    margin-top: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+ }
+ 
+ 
+ .reminders h2 {
+    font-size: 40px;
+    text-align: center;
+    color: #4A2C74;
+    margin-bottom: 25px;
+    font-weight: bold;
+ }
+ 
+ 
+ .reminder {
+    background-color: #f9f9f9;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+ }
+ 
+ 
+ .reminder:hover {
+    background-color: #f2f2f2;
+    transform: translateY(-5px);
+ }
+ 
+ 
+ .reminder h3 {
+    font-size: 28px;
+    color: #563063;
+    margin-bottom: 15px;
+ }
+ 
+ 
+ .reminder p {
+    font-size: 20px;
+    color: #4a4a4a;
+    margin-bottom: 15px;
+ }
+ 
+ 
+ .reminder small {
+    display: block;
+    margin-top: 15px;
+    color: #888;
+ }
+ 
+ 
+ .reminder button {
+    background-color: #68478D;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+ }
+ 
+ 
+ .reminder button:hover {
+    background-color: #563063;
+    transform: translateY(-3px);
+ }
+ 
+ 
+ .reminder button:focus {
+    outline: 3px solid #563063;
+ }
+ 
+ 
+ /* Reminder Form */
+ .reminder-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+ 
+ 
+ .reminder-form input,
+ .reminder-form textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+ }
+ 
+ 
+ .reminder-form button {
+    background-color: #68478D;
+    color: white;
+    padding: 20px 40px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+ }
+ 
+ 
+ .reminder-form button:hover {
+    background-color: #563063;
+ }
+ .delete-button {
+    padding: 10px 20px; /* Adjust padding */
+    font-size: 16px;    /* Adjust font size */
+    width: auto;        /* Or set a fixed width */
+ }
+
+/* Game1 Styles */
+.game1-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game1-word {
+    font-size: 3rem;
+    margin: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.option {
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.2s;
+}
+
+.option:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.option.Red {
+    background-color: red;
+}
+
+.option.Green {
+    background-color: green;
+}
+
+.option.Blue {
+    background-color: blue;
+}
+
+.option.Yellow {
+    background-color: yellow;
+}
+
+.option.Purple {
+    background-color: purple;
+}
+
+.option.Orange {
+    background-color: orange;
+}
+
+.game-button {
+    background-color: #FF6B6B; /* Specific color for the button */
+    color: white;
+    border: 2px solid #FF4F4F; /* Matching border */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.game-button:hover {
+    background-color: #FF4F4F; /* Darker shade for hover */
+    transform: scale(1.05);
+}
+
+/* Drag-and-Drop Game Styles */
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Category drop boxes */
+.category {
+    width: 220px;
+    height: 320px;
+    border: 2px solid #444;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    background-color: #f8f8f8;
+    position: relative;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.drop-zone {
+    flex-grow: 1;
+    border: 2px dashed #888;
+    border-radius: 8px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Draggable images */
+.draggable {
+    width: 100px;
+    height: 100px;
+    cursor: grab;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category h3 {
+    margin: 0;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    font-size: 18px;
+    color: #444;
+}
+
+.drag-container {
+    margin-top: 30px;
+}

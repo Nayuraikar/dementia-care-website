@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Location Tracking</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+   <header>
+       <h1>DIGIMEMORIES</h1>
+       <nav>
+           <a href="/">Home</a>
+           <a href="/location">Location Tracking</a>
+           <a href="/diary">Diary</a>
+           <a href="/photo_album">Photo Album</a>
+           <a href="/reminders">Reminders</a>
+           <a href="/game1">color word game</a>
+           <a href="/drag_and_drop"> Drag and Drop Game</a>
+       </nav>
+   </header>
+
+   <section>
+       <h2>Your Current Location</h2>
+       <div id="map" style="height: 400px;"></div>
+       <button onclick="trackLocation()">Track My Location</button>
+   </section>
+
+   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+   <script>
+       var map = L.map('map').setView([51.505, -0.09], 13);
+
+       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+       }).addTo(map);
+
+       function trackLocation() {
+           if (navigator.geolocation) {
+               navigator.geolocation.getCurrentPosition(function(position) {
+                   var lat = position.coords.latitude;
+                   var lon = position.coords.longitude;
+
+                   map.setView([lat, lon], 13);
+                   L.marker([lat, lon]).addTo(map)
+                       .bindPopup("You are here!")
+                       .openPopup();
+               }, function(error) {
+                   alert("Sorry, we couldn't track your location. Please check your browser settings.");
+               });
+           } else {
+               alert("Your browser does not support geolocation.");
+           }
+       }
+   </script>
+</body>
+</html>

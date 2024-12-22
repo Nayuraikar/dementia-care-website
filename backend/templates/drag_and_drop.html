@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <title>Drag and Drop Game</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom, #1A1A1D, #333);
+            color: #333;
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(to right, #704264, #563063);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 55px;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 20px;
+            font-size: 18px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s;
+        }
+
+        header nav a:hover {
+            color: #BB8493;
+            transform: scale(1.1);
+        }
+
+        .help-button {
+            display: block; /* Block display for centering */
+            margin: 20px auto; /* Centered horizontally */
+            padding: 12px 25px; /* Increased padding for visibility */
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background-color: #563063;
+            color: white;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Added shadow */
+            text-align: center; /* Center text */
+            max-width: 200px; /* Limit the width for better visibility */
+        }
+
+        .help-button:hover {
+            background-color: #7a4b7b; /* Slightly lighter color on hover */
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Category drop boxes */
+        .category {
+            width: 220px;
+            height: 320px;
+            border: 2px solid #444;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f8f8;
+            position: relative;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .drop-zone {
+            flex-grow: 1;
+            border: 2px dashed #888;
+            border-radius: 8px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Draggable images */
+        .draggable {
+            width: 100px;
+            height: 100px;
+            cursor: grab;
+            object-fit: cover;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .category h3 {
+            margin: 0;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            font-size: 18px;
+            color: #444;
+        }
+
+        .drag-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 2000; /* Sit on top of everything */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+            justify-content: center; /* Center modal vertically */
+            align-items: center; /* Center modal horizontally */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto; /* Center the modal content */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 10px; /* Rounded corners */
+            text-align: left;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); /* Added shadow */
+            top: -50px;/*sit on top*/
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>DIGIMEMORIES</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/location">Location Tracking</a>
+            <a href="/diary">Diary</a>
+            <a href="/photo_album">Photo Album</a>
+            <a href="/reminders">Reminders</a>
+            <a href="/game1">Color Word Game</a>
+            <a href="/drag_and_drop">Drag and Drop Game</a>
+        </nav>
+    </header>
+
+    <!-- Help Button -->
+    <button id="helpBtn" class="help-button">How to Play</button>
+
+    <!-- Categories -->
+    <div class="container">
+        <div class="category" id="animals" ondragover="allowDrop(event)" ondrop="drop(event, 'animals')">
+            <h3>Animals</h3>
+            <div class="drop-zone"></div>
+        </div>
+        <div class="category" id="birds" ondragover="allowDrop(event)" ondrop="drop(event, 'birds')">
+            <h3>Birds</h3>
+            <div class="drop-zone"></div>
+        </div>
+        <div class="category" id="fruits" ondragover="allowDrop(event)" ondrop="drop(event, 'fruits')">
+            <h3>Fruits</h3>
+            <div class="drop-zone"></div>
+        </div>
+        <div class="category" id="vegetables" ondragover="allowDrop(event)" ondrop="drop(event, 'vegetables')">
+            <h3>Vegetables</h3>
+            <div class="drop-zone"></div>
+        </div>
+    </div>
+
+    <!-- Draggable items -->
+    <div class="drag-container">
+        <img src="{{ url_for('static', filename='uploads/cat.jpeg') }}" id="cat" class="draggable" draggable="true" ondragstart="drag(event)" data-category="animals" alt="Cat">
+        <img src="{{ url_for('static', filename='uploads/parrot.jpeg') }}" id="parrot" class="draggable" draggable="true" ondragstart="drag(event)" data-category="birds" alt="Parrot">
+        <img src="{{ url_for('static', filename='uploads/apple.jpeg') }}" id="apple" class="draggable" draggable="true" ondragstart="drag(event)" data-category="fruits" alt="Apple">
+        <img src="{{ url_for('static', filename='uploads/carrot.jpeg') }}" id="carrot" class="draggable" draggable="true" ondragstart="drag(event)" data-category="vegetables" alt="Carrot">
+        <img src="{{ url_for('static', filename='uploads/dog.jpeg') }}" id="dog" class="draggable" draggable="true" ondragstart="drag(event)" data-category="animals" alt="Dog">
+        <img src="{{ url_for('static', filename='uploads/sparrow.jpeg') }}" id="sparrow" class="draggable" draggable="true" ondragstart="drag(event)" data-category="birds" alt="Sparrow">
+        <img src="{{ url_for('static', filename='uploads/banana.jpeg') }}" id="banana" class="draggable" draggable="true" ondragstart="drag(event)" data-category="fruits" alt="Banana">
+        <img src="{{ url_for('static', filename='uploads/potato.jpeg') }}" id="potato" class="draggable" draggable="true" ondragstart="drag(event)" data-category="vegetables" alt="Potato">
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>How to Play</h2>
+            <p>Drag the images into the correct category boxes below. Each category represents a type of item:</p>
+            <ul>
+                <li><strong>Animals</strong></li>
+                <li><strong>Birds</strong></li>
+                <li><strong>Fruits</strong></li>
+                <li><strong>Vegetables</strong></li>
+            </ul>
+            <p>Match the images to their corresponding categories. Have fun!</p>
+        </div>
+    </div>
+
+    <script>
+        function allowDrop(event) {
+            event.preventDefault(); // Enable drop event
+        }
+
+        function drag(event) {
+            event.dataTransfer.setData('id', event.target.id); // Store dragged item ID
+            event.dataTransfer.setData('category', event.target.getAttribute('data-category')); // Store category
+        }
+
+        function drop(event, targetCategory) {
+            event.preventDefault(); // Prevent default behavior
+
+            const draggedId = event.dataTransfer.getData('id');
+            const draggedCategory = event.dataTransfer.getData('category');
+
+            // Check if the dragged item matches the target category
+            if (draggedCategory === targetCategory) {
+                const draggedElement = document.getElementById(draggedId);
+                const dropZone = event.target.closest('.category').querySelector('.drop-zone');
+
+                if (dropZone && !dropZone.contains(draggedElement)) {
+                    dropZone.appendChild(draggedElement); // Add the dragged element to the drop zone
+                    draggedElement.setAttribute('draggable', false); // Disable further dragging
+                    draggedElement.style.cursor = 'default'; // Update cursor style
+                }
+            } else {
+                alert('Wrong category! Please try again.');
+            }
+        }
+
+        // Modal functionality
+        const modal = document.getElementById("myModal");
+        const helpBtn = document.getElementById("helpBtn");
+        const closeBtn = document.getElementsByClassName("close")[0];
+
+        helpBtn.onclick = function() {
+            modal.style.display = "flex"; // Show the modal as a flexbox for centering
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none"; // Close the modal
+        }
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none"; // Close the modal if clicked outside
+            }
+        }
+    </script>
+</body>
+
+</html>
